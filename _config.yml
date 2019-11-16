@@ -26,15 +26,17 @@ medium_username: # your Medium username
 quora_username: # your Quora username
 
 contact_note: >
-  You can even add a little note about which of these is the best way to reach you.
+
 
 google_analytics: UA-XXXXXXXXX # out your google-analytics code
 
 # -----------------------------------------------------------------------------
 # Blog
 # -----------------------------------------------------------------------------
-blog_name: CHANGE_ME blog name
-blog_description: a simple whitespace theme for academics
+blog_name: Recent published arcticles
+conference_name: Recent public presentations
+
+#blog_description: a simple whitespace theme for academics
 
 # Pagination
 paginate: 10

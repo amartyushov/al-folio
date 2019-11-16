@@ -1,7 +1,6 @@
 ---
 layout: page
 ---
-
 {% if page.profile %}
   <div class="profile col one {{ page.profile.align }}">
     {% if page.profile.image %}
@@ -16,3 +15,36 @@ layout: page
 {% endif %}
 
 {{ content }}
+<!-- Adding public talks-->
+<br><br>
+<h1 class="post-title">{{ site.conference_name }}</h1>
+<ul class="post-list">
+  <li>
+    <span class="post-meta">[Jun, 2019]</span> <a class=".post-title-for-about-page" href="https://www.slideshare.net/slideshow/embed_code/key/c8gvtnptDn72ui">[ENG] QA Meetup as Signavio, Berlin: Building a testing project from scractch</a>
+  </li>
+  <li>
+    <span class="post-meta">[May, 2018]</span> <a class=".post-title-for-about-page" href="https://2018.heisenbug-piter.ru/en/talks/2018/spb/1jny85xvcg2qqg0c66ccwq/">[RUS] Heisenbug, Saint-Petersburg: Auxiliary approaches in the testing of microservices</a>
+<!--    https://www.youtube.com/watch?list=PLsVTVVvrKX9uQ2UbF4JU07LSMGnu8udz6&v=V8UOYNJlz24&feature=emb_logo-->
+  </li>
+  <li>
+    <span class="post-meta">[Oct, 2017]</span> <a class=".post-title-for-about-page" href="https://www.seleniumconf.de/talks#aleksandr-martiushov">[ENG] SeleniumConf, Berlin: My Story of Microservices Testing</a>
+<!--    https://www.youtube.com/watch?v=ZQ0hjf3P-FM&feature=emb_logo-->
+  </li>
+  <li>
+    <span class="post-meta">[Apr, 2013]</span> <a class=".post-title-for-about-page" href="https://www.slideshare.net/slideshow/embed_code/key/uncu3Taw2v3inG">[RUS] SQADays, Saint-Petersburg: I am doing Fitnesse everyday</a>
+  </li>
+</ul>
+
+
+<!-- Adding recent publications talks-->
+<br><br>
+<h1 class="post-title">{{ site.blog_name }}</h1>
+<ul class="post-list">
+  {% for post in site.posts %}
+  <li>
+    <span class="post-meta">[{{ post.date | date: '%B, %Y' }}]</span> <a class=".post-title-for-about-page" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+<!--    <p>{{ post.description }}</p>-->
+  </li>
+  {% endfor %}
+</ul>
+
