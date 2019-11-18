@@ -1,10 +1,12 @@
-	@startuml
+@startuml
+' New session creation
 actor client
 box "selenium-remote-driver" #LightBlue
 	participant DesiredCapabilities as capabilities
 	participant RemoteWebDriver
 	participant HttpCommandExecutor
 	participant ProtocolHandshake
+	participant DriverCommandExecutor
 end box
 
 box "selenium-chrome-driver" #DeepSkyBlue
@@ -20,7 +22,7 @@ capabilities -> client : capabilities object
 client -> ChromeDriver : ::new(capabilities)
 activate ChromeDriver
 ChromeDriver -> ChromeDriverService : createDefaultService()
-note right : In this configuration, the service will use the chromedriver executable identified by the\n {@link #CHROME_DRIVER_EXE_PROPERTY} system property. Each service created by this method will\nbe configured to use a free port on the current system.
+note right : service will use the chromedriver executable \nidentified by {@link #CHROME_DRIVER_EXE_PROPERTY}
 activate ChromeDriverService
 ChromeDriverService -> ChromeDriver : chromeDriverService
 deactivate ChromeDriverService
@@ -33,18 +35,18 @@ activate RemoteWebDriver
 RemoteWebDriver -> RemoteWebDriver : init(capabilities)
 RemoteWebDriver -> RemoteWebDriver : startSession(capabilities)
 activate RemoteWebDriver #FFBBBB
-RemoteWebDriver -> ChromeDriverCommandExecutor : execute(DriverCommand.NEW_SESSION)
-activate ChromeDriverCommandExecutor #FFBBBB
-ChromeDriverCommandExecutor -> ChromeDriverService : start()
-ChromeDriverCommandExecutor -> HttpCommandExecutor : execute(DriverCommand.NEW_SESSION)
+RemoteWebDriver -> DriverCommandExecutor : execute(DriverCommand.NEW_SESSION)
+activate DriverCommandExecutor #FFBBBB
+DriverCommandExecutor -> ChromeDriverService : start()
+DriverCommandExecutor -> HttpCommandExecutor : execute(DriverCommand.NEW_SESSION)
 activate HttpCommandExecutor #FFBBBB
 HttpCommandExecutor -> ProtocolHandshake : createSession(command)
 activate ProtocolHandshake #FFBBBB
 ProtocolHandshake -> ProtocolHandshake : HTTP POST /session
 ProtocolHandshake -> HttpCommandExecutor : result
 deactivate ProtocolHandshake
-HttpCommandExecutor -> ChromeDriverCommandExecutor : Result
-deactivate ChromeDriverCommandExecutor
+HttpCommandExecutor -> DriverCommandExecutor : Result
+deactivate DriverCommandExecutor
 deactivate ProtocolHandshake
 deactivate HttpCommandExecutor
 
@@ -52,8 +54,43 @@ RemoteWebDriver -> ChromeDriver
 deactivate RemoteWebDriver
 ChromeDriver -> client : driver
 deactivate ChromeDriver
-
 @enduml
+
+
+
+@startuml
+' opening a url (just a command)
+actor client
+box "selenium-remote-driver" #LightBlue
+	participant RemoteWebDriver
+	participant HttpCommandExecutor
+	participant DriverCommandExecutor
+	participant W3CHttpCommandCodec
+	participant W3CHttpResponseCodec
+	participant OkHttpClient
+end box
+
+client -> RemoteWebDriver : get("URL")
+RemoteWebDriver -> RemoteWebDriver : execute(DriverCommand.GET, "URL")
+activate RemoteWebDriver
+RemoteWebDriver -> DriverCommandExecutor : execute(command)
+DriverCommandExecutor -> HttpCommandExecutor : execute(command)
+activate HttpCommandExecutor
+HttpCommandExecutor -> W3CHttpCommandCodec : encode(command)
+W3CHttpCommandCodec -> HttpCommandExecutor : HttpRequest "POST /session/XYZ/url URL"
+HttpCommandExecutor -> OkHttpClient : execute(httpRequest)
+OkHttpClient -> HttpCommandExecutor : httpResponse
+HttpCommandExecutor -> W3CHttpResponseCodec : decode(httpResponse)
+W3CHttpResponseCodec -> HttpCommandExecutor : Response response
+HttpCommandExecutor -> RemoteWebDriver
+deactivate HttpCommandExecutor
+deactivate RemoteWebDriver
+RemoteWebDriver -> client
+@enduml
+
+
+
+
 
 @startuml
 'Capability hierarchy
@@ -184,13 +221,11 @@ package selenium-chrome-driver <<Rectangle>> {
 	class ChromeDriverCommandExecutor
 		note left of ChromeDriverCommandExecutor
     		understands ChromeDriver specific commands
-    		List of ChromeWebdriver commands:
-    		https://chromium.googlesource.com/chromium/src/+/master/chrome/test/chromedriver/client/command_executor.py
     	end note
 }
 CommandExecutor <|.down. HttpCommandExecutor
 HttpCommandExecutor <|-down- DriverCommandExecutor
-DriverService *-left- DriverCommandExecutor
+DriverService -right-* DriverCommandExecutor
 DriverCommandExecutor <|-down- ChromeDriverCommandExecutor
 @enduml
 
@@ -223,4 +258,33 @@ CommandCodec <|.down. AbstractHttpCommandCodec
 AbstractHttpCommandCodec <|-down- JsonHttpCommandCodec
 AbstractHttpCommandCodec <|-down- W3CHttpCommandCodec
 @enduml
+
+
+
+
+
+
+
+
+@startuml
+' Overview of important class relations
+package selenium-remote-driver <<Rectangle>> {
+	class RemoteWebDriver
+	interface CommandExecutor {
+		Response execute(Command command)
+	}
+	interface Capabilities {
+		Response execute(Command command)
+	}
+	class HttpCommandExecutor
+    	class DriverCommandExecutor
+    	class DriverService
+}
+CommandExecutor -left-* RemoteWebDriver
+Capabilities -down-* RemoteWebDriver
+CommandExecutor <|.down. HttpCommandExecutor
+HttpCommandExecutor <|-down- DriverCommandExecutor
+DriverService -right-* DriverCommandExecutor
+@enduml
+
 
