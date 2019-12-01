@@ -2,7 +2,7 @@
 layout: about
 permalink: /
 title: Aleksandr <strong>Martiushov</strong> 
-description: <a href="">Affiliations</a>. Address. Contacts. Moto. Etc.
+description: Berlin; amartyushov@gmail.com; +4917667532248
 
 profile:
   align: right
@@ -13,8 +13,12 @@ news: false
 social: true
 ---
 
-Write your biography here. Tell the world about yourself. Link to your favorite [subreddit](http://reddit.com){:target="\_blank"}. You can put a picture in, too. The code is already in, just name your picture `prof_pic.jpg` and put it in the `img/` folder.
+Aleksandr is a software engineer with **9+** years experience in backend **development** and QA **automation testing**.  
+Currently he works in Berlin at [Signavio](https://www.signavio.com/){:target="\_blank"} as a **Java Backend Developer**, making a transformation phase of the product to happen.  
+Aleksandr is a big adept of team **clean coding culture** grow. He finds a way of **learning through sharing** and presenting is the most productive for the group.  
+He is a proud father of two. At a free time he is a electronic enthusiast and participant in coding contests.   
 
-Put your address / P.O. box / other info right below your picture. You can also disable any these elements by editing `profile` property of the YAML header of your `_pages/about.md`. Edit `_bibliography/papers.bib` and Jekyll will render your [publications page](/al-folio/publications/) automatically.
 
-Link to your social media connections, too. This theme is set up to use [Font Awesome icons](http://fortawesome.github.io/Font-Awesome/){:target="\_blank"} and [Academicons](https://jpswalsh.github.io/academicons/){:target="\_blank"}, like the ones below. Add your Facebook, Twitter, LinkedIn, Google Scholar, or just disable all of them.
+
+Please find my **CV** for further details [LINK](/assets/pdf/Alexander_Martyushov_CV.pdf){:target="\_blank"}
+                                                                                     
