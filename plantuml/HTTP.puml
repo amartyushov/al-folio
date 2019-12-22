@@ -1,0 +1,36 @@
+@startuml
+' set-cookie overview
+client <- server : response
+note right: (optional) \n HTTP header: Set-Cookie \n => browser creates cookies or domains \n => used in future requests
+@enduml
+
+@startuml
+' Symmetric encription
+client -> server : encrypted data (request)
+note left: ENcrypt with symmetric key
+note right: DEcrypt with symmetric key
+client <- server : encrypted data (response)
+note left: DEcrypt with symmetric key
+note right: ENcrypt with symmetric key
+@enduml
+
+@startuml
+' Asymmetric encription
+hide footbox
+encryption -> decryption : goes one way
+note left: public key
+note right: private key
+@enduml
+
+@startuml
+' how https encryption works
+== Asymmetric encription ==
+client -> server : I want https connection
+client <- server : public key
+client <- client : generate session key
+client <- client : session key is encrypted \nwith public key
+client -> server : encrypted session key
+server -> server : decrypted session key \nwith private key
+== Symmetric encription takes over ==
+client <-> server : session key
+@enduml

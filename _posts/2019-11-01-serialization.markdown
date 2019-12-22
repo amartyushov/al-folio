@@ -190,3 +190,4 @@ There is an example where fragility of `serialVersionUID` is demonstrated.
 <span class="fs-3">[example](https://github.com/amartyushov/Experiments/blob/master/java/features/serialization/src/test/java/io/mart/SerialVersionUIDTest.java){: .btn .btn-purple}</span>  
 
 ## Custom serialization
+TODO

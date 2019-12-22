@@ -1,0 +1,92 @@
+@startuml
+' simple linked list
+class value1 {
+  next:
+}
+
+class value2 {
+  next:
+}
+
+class value3 {
+  next:
+}
+
+hide methods
+value1 -> value2
+value2 -> value3
+value3 -() null
+@enduml
+
+
+@startuml
+' linked list: insertion
+class value1 {
+  next:
+}
+
+class value2 #green{
+  next:
+}
+
+class value3 {
+  next:
+}
+
+hide methods
+value1 -right[#red,dotted]-> value3 : delete this link
+value1 -right[#green,bold]-> value2 : create this link
+value2 -right[#green,bold]-> value3 : create this link
+value3 -() null
+@enduml
+
+
+
+
+
+@startuml
+' linked list: deletion
+class value1 {
+  next:
+}
+
+class value2 #red{
+  next:
+}
+
+class value3 {
+  next:
+}
+
+hide methods
+value1 -right[#green,bold]-> value3 : create this link
+value1 -right[#red,dotted]-> value2 : delete this link
+value2 -right[#red,dotted]-> value3 : delete this link
+value3 -() null
+@enduml
+
+
+
+@startuml
+' simple doubly linked list
+class value1 {
+  prev:
+  next:
+}
+
+class value2 {
+  prev:
+  next:
+}
+
+class value3 {
+  prev:
+  next:
+}
+
+hide methods
+value1 -> value2
+value2 -> value1
+value2 -> value3
+value3 -> value2
+@enduml
