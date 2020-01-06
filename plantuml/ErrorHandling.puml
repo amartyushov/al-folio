@@ -1,0 +1,55 @@
+@startuml
+
+package javax.ws.rs.ext {
+
+interface ExceptionMapper<? extends Throwable> {
+  Response toResponse(E exception);
+}
+note top
+	Contract for a provider that maps
+	Java exceptions to Response
+	com.signavio.platform.exceptions.RequestException
+end note
+
+interface MessageBodyWriter<Object>
+note top
+Contract for a provider that supports the conversion
+of a Java type to a stream.
+end note
+
+}
+
+package com.signavio.util.http {
+	class RequestIdService
+}
+
+package com.signavio.infrastructure.jaxrs.provider.writer {
+	class ViewWriter
+}
+
+
+package com.signavio.infrastructure.jaxrs.provider.mapper {
+	class RequestExceptionMapper
+}
+
+package javax.servlet {
+	interface ServletContext
+}
+
+package javax.servlet.http {
+	interface HttpServletRequest
+	interface HttpServletResponse
+}
+
+RequestExceptionMapper *-- HttpServletRequest
+RequestExceptionMapper *-- RequestIdService
+
+ViewWriter *-- HttpServletRequest
+ViewWriter *-- ServletContext
+ViewWriter *-- HttpServletResponse
+
+
+RequestExceptionMapper -up-|> ExceptionMapper
+ViewWriter -up-|> MessageBodyWriter
+
+@enduml

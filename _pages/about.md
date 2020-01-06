@@ -21,4 +21,8 @@ He is a proud father of two. At a free time he is a electronic enthusiast and pa
 
 
 Please find my **CV** for further details [LINK](/assets/pdf/Alexander_Martyushov_CV.pdf){:target="\_blank"}
+
+
+There is a **gitbook** with lots of technical articles written by me [LINK](https://amartyushov.gitbook.io/tech/){:target="\_blank"}
+       
                                                                                      
