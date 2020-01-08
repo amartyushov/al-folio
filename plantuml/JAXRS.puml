@@ -1,0 +1,30 @@
+@startuml
+' JAX-RS request processing cycle
+(*) -right-> [Client request] "Pre-matching\ncontainer\nrequest filter"
+-right-> "Post-matching\ncontainer\nresponse filter"
+-right-> "Reader \ninterceptor"
+-right-> "Message body \nreader"
+--> "Resource \nmethod \nprocessing"
+--> "Container \nresponse filter"
+-left-> "Writer \ninterceptor"
+-left-> "Message body \nwriter"
+-left-> [Server Response] (*)
+@enduml
+
+@startuml
+' resource construction
+(*) -right-> "constructor \nis called"
+-right-> "requested dependencies \nare injected"
+-right-> "appropriate method \nis invoked"
+-right-> "object is available \nfor gc"
+-right-> (*)
+@enduml
+
+@startuml
+' media types vs headers
+client -> server : Header: Accept
+note right: matches to @Produces JAX-RS
+
+client -> server : Header: Content-Type
+note right: matches to @Consumes JAX-RS
+@enduml
