@@ -1,0 +1,49 @@
+@startuml
+' registration and invitation result
+class Account {
+	id = 92f532caa7fa491ca9b2abd545256124
+	firstName = Registered
+	lastName = Now
+	email = registered@sig.com
+	principal = registered@sig.com
+}
+
+package businessinstance_(tenant_has_User) {
+	class Tenant {
+		name = signavio (Registered Now)
+		id = 3dd7245551274c2ab489e6aba7e9cc1e
+	}
+
+	abstract class User {
+		id = a306ace731494e1c86c93bd10437a82e
+		by registration
+		Administrator
+	}
+
+	class User2 {
+		id = 7d7c128543ec4ffba3953ccd6dc248b2
+		by invitation
+	}
+
+	class Tenant2 {
+		name = signavio (Registered Now) CHANGE_IT
+		id = b6cce8d576374bb1886176371a0daee8
+	}
+
+	abstract class User3 {
+		id = 415f4cf276434680872f918c17c8921f
+		Administrator
+	}
+}
+
+Tenant <.up. User
+Tenant <.up. User2
+Tenant2 <.up. User3
+' GuestUser
+' AnonymousUser
+
+User "child" -up-> "parent" Account : businesshierarchy
+Tenant "child" -up-> "parent" Account : businesshierarchy
+User3 "child" -up-> "parent" Account : businesshierarchy
+Tenant2 "child" -up-> "parent" Account : businesshierarchy
+@enduml

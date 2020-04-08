@@ -1,0 +1,11 @@
+@startuml
+' simple login
+form -> app : login and password
+app -> DB
+note right: Hash password \nVerify hash \nLook up user info \nLook up authorization info
+app <- DB
+
+alt success
+app -> form : Set-Cookie: sessionid=XYZ; Max-Age: 86400;
+end
+@enduml

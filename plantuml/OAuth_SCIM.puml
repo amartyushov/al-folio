@@ -1,0 +1,40 @@
+@startuml
+MailingService --> SPM : POST /p/token (clientId, secret)
+MailingService <-- SPM : AcessToken
+|||
+MailingService -[#blue]> SPM : /p/subscriptionservice (Authorization: Bearer XYZ)
+SPM -[#blue]> TomcatFilterChain
+TomcatFilterChain -[#blue]> TomcatFilterChain : OAuthAuthenticationFilter\n(Validate token)
+TomcatFilterChain -[#blue]> TomcatFilterChain : AuthenticationFilter\n(Validates if client token \ncan be used for Handler)
+TomcatFilterChain -[#blue]> Handler
+Handler -[#blue]> Handler : build response
+TomcatFilterChain <-[#blue] Handler
+SPM <-[#blue] TomcatFilterChain
+MailingService <-[#blue] SPM
+@enduml
+
+
+@startuml
+Client --> SPM : POST /p/token (clientId, secret)
+Client <-- SPM : AcessToken (scope: SCIM, tenantId: 123)
+|||
+Client -[#blue]> SPM : /p/scim/user (Authorization: Bearer XYZ)
+SPM -[#blue]> TomcatFilterChain
+TomcatFilterChain -[#blue]> TomcatFilterChain : OAuthAuthenticationFilter\n(Validate token)
+TomcatFilterChain -[#blue]> TomcatFilterChain : AuthenticationFilter\n(Validates if client token \ncan be used for Handler)
+TomcatFilterChain -[#blue]> JAXRS_filters
+JAXRS_filters -[#blue]> JAXRS_filters : ContainerRequestFilter \n(inject TokenManager)
+note right
+	Cross verify SignavioScope
+	with client token`s scope
+endnote
+
+JAXRS_filters -[#blue]> Endpoint : create root token\nswitch to tenant
+Endpoint -[#blue]> Endpoint : SCIM topic
+JAXRS_filters <-[#blue] Endpoint
+JAXRS_filters -[#blue]> JAXRS_filters : remove root token
+JAXRS_filters -[#blue]> TomcatFilterChain :
+
+SPM <-[#blue] TomcatFilterChain
+Client <-[#blue] SPM
+@enduml
