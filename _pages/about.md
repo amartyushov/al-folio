@@ -14,8 +14,13 @@ social: true
 ---
 
 Aleksandr is a software engineer with **14+** years experience in backend **development** and QA **automation testing**.  
-Currently he works in Berlin at [SAP Signavio](https://www.signavio.com/){:target="\_blank"} as a **Senior Backend Developer**.   
-Aleksandr is a big adept of team **clean coding culture**. He finds a way of **learning through sharing** the most productive for the team.  
+Currently he works in Berlin at [SAP Signavio](https://www.signavio.com/){:target="\_blank"} as a **Senior Backend Developer**.
+His expertise includes various aspects:
+* architecting new solutions as well as maintaining legacy applications
+* design of implementation details, with either followup code writing or delegating the implementation to the team
+* managing application infrastructure
+
+Aleksandr is an adept of **clean coding culture**. He finds a way of **learning through sharing** the most productive for the team.  
 He is a proud father of two. At a free time he is a musician, micro-electronic enthusiast and participant in coding contests.   
 
 
